@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDR Forge — AI Diagnostic Report Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+        :root {
+            --bg: #0f1117;
+            --surface: #181c27;
+            --surface2: #1e2334;
+            --surface3: #252b3d;
+            --border: rgba(255, 255, 255, 0.08);
+            --border2: rgba(255, 255, 255, 0.14);
+            --text: #e8eaf0;
+            --text2: #8b90a4;
+            --text3: #555c72;
+            --green: #00e5a0;
+            --green-dim: rgba(0, 229, 160, 0.12);
+            --green-glow: rgba(0, 229, 160, 0.25);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.12);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.12);
+            --blue: #60a5fa;
+            --blue-dim: rgba(96, 165, 250, 0.12);
+            --orange: #fb923c;
+            --orange-dim: rgba(251, 146, 60, 0.12);
+            --r: 10px;
+            --rl: 16px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+        
+        html {
+            scroll-behavior: smooth
+        }
+        
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.65
+        }
+        /* ─ Scrollbar ─ */
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg)
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface3);
+            border-radius: 3px
+        }
+        /* ─ Header ─ */
+        
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(12px);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+        
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #00e5a0, #0099ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.01em
+        }
+        
+        .logo-sub {
+            font-size: 0.72rem;
+            color: var(--text3);
+            margin-top: 1px;
+            letter-spacing: 0.04em
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+        
+        .badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--green-dim);
+            color: var(--green);
+            border: 1px solid rgba(0, 229, 160, 0.25);
+            letter-spacing: 0.05em;
+            font-weight: 600
+        }
+        /* ─ Main ─ */
+        
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem
+        }
+        /* ─ Hero ─ */
+        
+        .hero {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--rl);
+            padding: 2.5rem 2.5rem 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--green);
+            text-transform: uppercase;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 229, 160, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px
+        }
+        
+        .hero-title span {
+            color: var(--green)
+        }
+        
+        .hero-desc {
+            font-size: 0.9rem;
+            color: var(--text2);
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 1.5rem
+        }
+        
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            gap: 4px
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--text2);
+            background: var(--surface2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border)
+        }
+        
+        .flow-n {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0
+        }
+        
+        .flow-arr {
+            color: var(--text3);
+            font-size: 11px;
+            padding: 0 2px
+        }
+        /* ─ Upload Grid ─ */
+        
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem
+        }
+        
+        @media(max-width:640px) {
+            .upload-grid {
+                grid-template-columns: 1fr
+            }
+        }
+        
+        .upload-card {
+            background: var(--surface);
+            border: 1.5px dashed var(--border2);
+            border-radius: var(--rl);
+            padding: 1.75rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .upload-card:hover {
+            border-color: var(--green);
+            background: var(--green-dim)
+        }
+        
+        .upload-card.has-file {
+            border-style: solid;
+            border-color: var(--green);
+            background: var(--green-dim)
+        }
+        
+        .upload-card.drag-over {
+            border-color: var(--green);
+            background: var(--green-dim);
+            transform: scale(1.01)
+        }
+        
+        .u-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 22px;
+            transition: background 0.2s
+        }
+        
+        .upload-card.has-file .u-icon {
+            background: var(--green-dim)
+        }
+        
+        .u-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 4px
+        }
+        
+        .u-sub {
+            font-size: 0.78rem;
+            color: var(--text2)
+        }
+        
+        .u-fname {
+            font-size: 0.75rem;
+            color: var(--green);
+            font-weight: 500;
+            margin-top: 8px;
+            word-break: break-all
+        }
+        
+        .u-remove {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text3);
+            font-size: 18px;
+            transition: color 0.15s;
+            line-height: 1
+        }
+        
+        .u-remove:hover {
+            color: var(--red)
+        }
+        
+        .u-formats {
+            font-size: 0.7rem;
+            color: var(--text3);
+            margin-top: 6px
+        }
+        
+        input[type=file] {
+            display: none
+        }
+        /* ─ Config Row ─ */
+        
+        .config-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 0.85rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cfg-group {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+        
+        .cfg-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            white-space: nowrap
+        }
+        
+        .cfg-chip {
+            font-size: 0.78rem;
+            padding: 5px 13px;
+            border-radius: 20px;
+            border: 1px solid var(--border2);
+            background: var(--surface2);
+            cursor: pointer;
+            transition: all 0.15s;
+            color: var(--text2);
+            font-weight: 500;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .cfg-chip:hover {
+            border-color: var(--green);
+            color: var(--text)
+        }
+        
+        .cfg-chip.on {
+            background: var(--green);
+            color: #000;
+            border-color: var(--green);
+            font-weight: 600
+        }
+        
+        .cfg-sep {
+            width: 1px;
+            height: 22px;
+            background: var(--border);
+            flex-shrink: 0
+        }
+        /* ─ Sample Load ─ */
+        
+        .sample-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.85rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+        }
+        
+        .sample-label {
+            font-size: 0.78rem;
+            color: var(--text2);
+            flex: 1
+        }
+        
+        .sample-label strong {
+            color: var(--text)
+        }
+        
+        .btn-sample {
+            font-size: 0.78rem;
+            padding: 6px 14px;
+            border-radius: var(--r);
+            border: 1px solid var(--border2);
+            background: var(--surface2);
+            cursor: pointer;
+            color: var(--text2);
+            transition: all 0.15s;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .btn-sample:hover {
+            border-color: var(--green);
+            color: var(--green)
+        }
+        /* ─ Generate Button ─ */
+        
+        .btn-gen {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00e5a0, #0099ff);
+            color: #000;
+            border: none;
+            border-radius: var(--r);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-gen:hover:not(:disabled) {
+            filter: brightness(1.1);
+            transform: translateY(-1px)
+        }
+        
+        .btn-gen:active:not(:disabled) {
+            transform: translateY(0) scale(0.99)
+        }
+        
+        .btn-gen:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            filter: none;
+            transform: none
+        }
+        /* ─ Progress ─ */
+        
+        .prog-wrap {
+            display: none;
+            margin: 1.25rem 0;
+            padding: 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r)
+        }
+        
+        .prog-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px
+        }
+        
+        .prog-label {
+            font-size: 0.82rem;
+            color: var(--text2)
+        }
+        
+        .prog-pct {
+            font-size: 0.78rem;
+            color: var(--green);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums
+        }
+        
+        .prog-bar {
+            height: 3px;
+            background: var(--surface3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px
+        }
+        
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00e5a0, #0099ff);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%
+        }
+        
+        .prog-steps {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+        
+        .ps {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--surface3);
+            color: var(--text3);
+            transition: all 0.3s
+        }
+        
+        .ps.active {
+            background: var(--green-dim);
+            color: var(--green);
+            border: 1px solid rgba(0, 229, 160, 0.3)
+        }
+        
+        .ps.done {
+            background: var(--green);
+            color: #000;
+            font-weight: 600
+        }
+        /* ─ Error ─ */
+        
+        .err-box {
+            display: none;
+            background: var(--red-dim);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: var(--r);
+            padding: 1rem 1.25rem;
+            font-size: 0.85rem;
+            color: var(--red);
+            margin: 1rem 0
+        }
+        /* ─ Report Wrap ─ */
+        
+        .report-wrap {
+            display: none;
+            margin-top: 2rem
+        }
+        
+        .rpt-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+        
+        .rpt-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700
+        }
+        
+        .rpt-title span {
+            color: var(--green)
+        }
+        
+        .rpt-btns {
+            display: flex;
+            gap: 8px
+        }
+        
+        .btn-act {
+            padding: 7px 16px;
+            border-radius: var(--r);
+            border: 1px solid var(--border2);
+            background: var(--surface2);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text2);
+            transition: all 0.15s;
+            font-family: 'Sora', sans-serif
+        }
+        
+        .btn-act:hover {
+            border-color: var(--green);
+            color: var(--green)
+        }
+        
+        .btn-act.primary {
+            background: var(--green);
+            color: #000;
+            border-color: var(--green);
+            font-weight: 700
+        }
+        
+        .btn-act.primary:hover {
+            filter: brightness(1.1)
+        }
+        /* ─ Meta chips ─ */
+        
+        .rpt-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem
+        }
+        
+        .mc {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--surface2);
+            color: var(--text2);
+            border: 1px solid var(--border)
+        }
+        /* ─ Severity Bar (hero) ─ */
+        
+        .sev-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 1.25rem
+        }
+        
+        .sev-card {
+            border-radius: var(--r);
+            padding: 14px;
+            text-align: center;
+            border: 1px solid transparent
+        }
+        
+        .sev-card .sc-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+            font-family: 'Playfair Display', serif
+        }
+        
+        .sev-card .sc-lbl {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600
+        }
+        
+        .sc-crit {
+            background: var(--red-dim);
+            border-color: rgba(248, 113, 113, 0.25);
+            color: var(--red)
+        }
+        
+        .sc-high {
+            background: var(--orange-dim);
+            border-color: rgba(251, 146, 60, 0.25);
+            color: var(--orange)
+        }
+        
+        .sc-med {
+            background: var(--amber-dim);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: var(--amber)
+        }
+        
+        .sc-low {
+            background: var(--green-dim);
+            border-color: rgba(0, 229, 160, 0.25);
+            color: var(--green)
+        }
+        /* ─ DDR Section Cards ─ */
+        
+        .ddr-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--rl);
+            margin-bottom: 1rem;
+            overflow: hidden
+        }
+        
+        .ddr-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s
+        }
+        
+        .ddr-head:hover {
+            background: var(--surface2)
+        }
+        
+        .ddr-ico {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0
+        }
+        
+        .ddr-ht {
+            font-weight: 600;
+            font-size: 0.92rem;
+            flex: 1
+        }
+        
+        .ddr-badge {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid transparent
+        }
+        
+        .chv {
+            transition: transform 0.25s;
+            font-size: 11px;
+            color: var(--text3)
+        }
+        
+        .chv.open {
+            transform: rotate(180deg)
+        }
+        
+        .ddr-body {
+            padding: 0 1.25rem 1.25rem;
+            border-top: 1px solid var(--border)
+        }
+        /* ─ Content ─ */
+        
+        .dc {
+            font-size: 0.875rem;
+            line-height: 1.75;
+            color: var(--text)
+        }
+        
+        .dc h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text3);
+            margin: 1.1rem 0 0.5rem;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--border)
+        }
+        
+        .dc p {
+            margin-bottom: 0.7rem
+        }
+        
+        .dc ul {
+            padding-left: 1.25rem;
+            margin-bottom: 0.7rem
+        }
+        
+        .dc li {
+            margin-bottom: 4px
+        }
+        
+        .dc strong {
+            font-weight: 600;
+            color: var(--text)
+        }
+        
+        .dc table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin-top: 6px
+        }
+        
+        .dc th {
+            padding: 8px 10px;
+            text-align: left;
+            color: var(--text3);
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border2)
+        }
+        
+        .dc td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top
+        }
+        
+        .dc tr:last-child td {
+            border-bottom: none
+        }
+        
+        .dc tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.02)
+        }
+        
+        .na {
+            display: inline-block;
+            background: var(--surface3);
+            color: var(--text3);
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-style: italic
+        }
+        
+        .conflict-flag {
+            display: inline-block;
+            background: var(--amber-dim);
+            color: var(--amber);
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(245, 158, 11, 0.25)
+        }
+        
+        .conflict-block {
+            background: rgba(245, 158, 11, 0.06);
+            border-left: 3px solid var(--amber);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            font-size: 0.83rem
+        }
+        
+        .area-block {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1rem;
+            margin-bottom: 1rem
+        }
+        
+        .area-block:last-child {
+            margin-bottom: 0
+        }
+        
+        .area-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        
+        .img-ref-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 8px 0
+        }
+        
+        .img-ref-chip {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: var(--surface3);
+            color: var(--text2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+        
+        .img-na-chip {
+            opacity: 0.5;
+            font-style: italic
+        }
+        
+        .action-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 12px
+        }
+        
+        .action-num {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px
+        }
+        
+        .action-body strong {
+            font-weight: 600
+        }
+        
+        .action-meta {
+            font-size: 0.78rem;
+            color: var(--text2);
+            margin-top: 2px
+        }
+        
+        .action-note {
+            font-size: 0.78rem;
+            color: var(--text3);
+            margin-top: 2px;
+            font-style: italic
+        }
+        
+        .cause-item {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 0.85rem 1rem;
+            margin-bottom: 8px
+        }
+        
+        .cause-issue {
+            font-weight: 600;
+            font-size: 0.88rem;
+            margin-bottom: 4px
+        }
+        
+        .cause-detail {
+            font-size: 0.82rem;
+            color: var(--text2)
+        }
+        
+        .cause-evidence {
+            font-size: 0.78rem;
+            color: var(--text3);
+            margin-top: 4px;
+            border-top: 1px solid var(--border);
+            padding-top: 4px
+        }
+        
+        .missing-na {
+            color: var(--text3);
+            font-style: italic
+        }
+        
+        .missing-conflict {
+            color: var(--amber)
+        }
+        
+        .green-check {
+            color: var(--green);
+            font-size: 0.88rem
+        }
+        /* ─ Overall condition badge ─ */
+        
+        .cond-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-top: 8px
+        }
+        
+        .cond-Good {
+            background: var(--green-dim);
+            color: var(--green);
+            border: 1px solid rgba(0, 229, 160, 0.25)
+        }
+        
+        .cond-Fair {
+            background: var(--amber-dim);
+            color: var(--amber);
+            border: 1px solid rgba(245, 158, 11, 0.25)
+        }
+        
+        .cond-Poor {
+            background: var(--orange-dim);
+            color: var(--orange);
+            border: 1px solid rgba(251, 146, 60, 0.25)
+        }
+        
+        .cond-Critical {
+            background: var(--red-dim);
+            color: var(--red);
+            border: 1px solid rgba(248, 113, 113, 0.25)
+        }
+        /* ─ Severity badge inline ─ */
+        
+        .sb {
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600
+        }
+        
+        .sb-Critical {
+            background: var(--red-dim);
+            color: var(--red)
+        }
+        
+        .sb-High {
+            background: var(--orange-dim);
+            color: var(--orange)
+        }
+        
+        .sb-Medium {
+            background: var(--amber-dim);
+            color: var(--amber)
+        }
+        
+        .sb-Low {
+            background: var(--green-dim);
+            color: var(--green)
+        }
+        /* ─ Animations ─ */
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        
+        .fade-in {
+            animation: fadeUp 0.4s ease forwards
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+        
+        .spin {
+            display: inline-block;
+            animation: spin 0.75s linear infinite
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1
+            }
+            50% {
+                opacity: 0.45
+            }
+        }
+        
+        .pulse {
+            animation: pulse 1.4s ease-in-out infinite
+        }
+        /* ─ Print ─ */
+        
+        @media print {
+            body {
+                background: #fff;
+                color: #000
+            }
+            header,
+            .upload-grid,
+            .config-row,
+            .sample-row,
+            .btn-gen,
+            .prog-wrap,
+            .rpt-btns {
+                display: none!important
+            }
+            .report-wrap {
+                display: block!important
+            }
+            .ddr-card {
+                break-inside: avoid;
+                border: 1px solid #ddd
+            }
+            .ddr-body {
+                display: block!important
+            }
+            .ddr-head {
+                cursor: default
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🔬</div>
+            <div>
+                <div class="logo-text">DDR Forge</div>
+                <div class="logo-sub">AI DIAGNOSTIC REPORT GENERATOR</div>
+            </div>
+        </div>
+        <div class="header-right"></div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero -->
+        <div class="hero fade-in">
+            <div class="hero-kicker">🏗 Applied AI Builder · DDR Report System</div>
+            <div class="hero-title">Turn raw inspection data into<br><span>client-ready reports</span></div>
+            <div class="hero-desc">Upload your Inspection Report and Thermal Report. The AI reads both documents, intelligently merges findings, flags conflicts, handles missing data, and produces a structured Detailed Diagnostic Report.</div>
+            <div class="flow">
+                <div class="flow-step">
+                    <div class="flow-n">1</div>Upload 2 reports</div>
+                <div class="flow-arr">›</div>
+                <div class="flow-step">
+                    <div class="flow-n">2</div>AI extracts &amp; merges</div>
+                <div class="flow-arr">›</div>
+                <div class="flow-step">
+                    <div class="flow-n">3</div>Conflicts flagged</div>
+                <div class="flow-arr">›</div>
+                <div class="flow-step">
+                    <div class="flow-n">4</div>DDR generated</div>
+                <div class="flow-arr">›</div>
+                <div class="flow-step">
+                    <div class="flow-n">5</div>Download / Print</div>
+            </div>
+        </div>
+
+        <!-- Sample Documents Notice -->
+        <div class="sample-row fade-in">
+            <div class="sample-label">🗂 <strong>No documents yet?</strong> Load sample inspection + thermal reports to see a live demo of the system.</div>
+            <button class="btn-sample" onclick="loadSamples()">⬇ Load Sample Documents</button>
+        </div>
+
+        <!-- Upload -->
+        <div class="upload-grid">
+            <div class="upload-card" id="inspCard" onclick="document.getElementById('inspFile').click()" ondragover="doDragOver(event,'insp')" ondragleave="doDragLeave('insp')" ondrop="doDrop(event,'insp')">
+                <div class="u-icon" id="inspIco">📋</div>
+                <div class="u-title">Inspection Report</div>
+                <div class="u-sub">Site observations &amp; issue descriptions</div>
+                <div class="u-fname" id="inspFname" style="display:none"></div>
+                <div class="u-formats">PDF, TXT, DOC, DOCX</div>
+                <input type="file" id="inspFile" accept=".pdf,.txt,.doc,.docx" onchange="handleFile('insp',this)">
+            </div>
+            <div class="upload-card" id="thermCard" onclick="document.getElementById('thermFile').click()" ondragover="doDragOver(event,'therm')" ondragleave="doDragLeave('therm')" ondrop="doDrop(event,'therm')">
+                <div class="u-icon" id="thermIco">🌡️</div>
+                <div class="u-title">Thermal Report</div>
+                <div class="u-sub">Temperature readings &amp; thermal findings</div>
+                <div class="u-fname" id="thermFname" style="display:none"></div>
+                <div class="u-formats">PDF, TXT, DOC, DOCX</div>
+                <input type="file" id="thermFile" accept=".pdf,.txt,.doc,.docx" onchange="handleFile('therm',this)">
+            </div>
+        </div>
+
+        <!-- Config -->
+        <div class="config-row">
+            <div class="cfg-group">
+                <span class="cfg-label">Language</span>
+                <button class="cfg-chip on" onclick="setCfg('lang','client',this)">Client-Friendly</button>
+                <button class="cfg-chip" onclick="setCfg('lang','technical',this)">Technical</button>
+            </div>
+            <div class="cfg-sep"></div>
+            <div class="cfg-group">
+                <span class="cfg-label">Severity</span>
+                <button class="cfg-chip on" onclick="setCfg('sev','4',this)">4-Level</button>
+                <button class="cfg-chip" onclick="setCfg('sev','3',this)">3-Level</button>
+            </div>
+            <div class="cfg-sep"></div>
+            <div class="cfg-group">
+                <span class="cfg-label">Detail</span>
+                <button class="cfg-chip on" onclick="setCfg('detail','full',this)">Full Report</button>
+                <button class="cfg-chip" onclick="setCfg('detail','summary',this)">Summary Only</button>
+            </div>
+        </div>
+
+        <!-- Generate -->
+        <button class="btn-gen" id="genBtn" onclick="doGenerate()" disabled>
+    <span id="genTxt">Upload both documents to continue</span>
+  </button>
+
+        <!-- Progress -->
+        <div class="prog-wrap" id="progWrap">
+            <div class="prog-top">
+                <div class="prog-label" id="progLabel">Initialising…</div>
+                <div class="prog-pct" id="progPct">0%</div>
+            </div>
+            <div class="prog-bar">
+                <div class="prog-fill" id="progFill"></div>
+            </div>
+            <div class="prog-steps">
+                <div class="ps" id="ps1">📄 Parsing documents</div>
+                <div class="ps" id="ps2">🔍 Extracting observations</div>
+                <div class="ps" id="ps3">🌡️ Merging thermal data</div>
+                <div class="ps" id="ps4">🔎 Analysing root causes</div>
+                <div class="ps" id="ps5">⚠️ Severity assessment</div>
+                <div class="ps" id="ps6">📝 Compiling DDR report</div>
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div class="err-box" id="errBox"></div>
+
+        <!-- Report -->
+        <div class="report-wrap" id="reportWrap">
+            <div class="rpt-topbar">
+                <div>
+                    <div class="rpt-title">Detailed Diagnostic Report <span>(DDR)</span></div>
+                </div>
+                <div class="rpt-btns">
+                    <button class="btn-act" onclick="window.print()">🖨 Print</button>
+                    <button class="btn-act" id="jsonBtn" onclick="copyJSON()">{ } JSON</button>
+                    <button class="btn-act primary" onclick="downloadHTML()">⬇ Download Report</button>
+                </div>
+            </div>
+            <div class="rpt-meta" id="rptMeta"></div>
+            <div id="rptContent"></div>
+        </div>
+
+    </div>
+    <!-- /container -->
+
+    <script>
+        // ══════════════════════════════
+        // STATE
+        // ══════════════════════════════
+        const S = {
+            inspFile: null,
+            inspText: null,
+            inspB64: null,
+            inspIsPDF: false,
+            thermFile: null,
+            thermText: null,
+            thermB64: null,
+            thermIsPDF: false,
+            cfg: {
+                lang: 'client',
+                sev: '4',
+                detail: 'full'
+            },
+            lastDDR: null
+        };
+
+        // ══════════════════════════════
+        // SAMPLE DATA
+        // ══════════════════════════════
+        const SAMPLE_INSP = `====================================================
+PROPERTY INSPECTION REPORT
+====================================================
+Report Reference : IR-2024-0892
+Inspection Date  : 14 March 2024
+Property Address : Unit 4B, Greenfield Business Park, Sector 12, Chennai - 600 096
+Inspector Name   : Arjun Venkataraman, CEng, MRICS
+Client Name      : Mr. Ramesh Sundarajan
+Report Prepared  : 18 March 2024
+====================================================
+
+EXECUTIVE SUMMARY
+-----------------
+A full condition inspection was carried out on the above commercial premises spanning
+approximately 3,200 sq ft across a single floor. Several structural and water-related
+defects were identified. Immediate remedial action is recommended for two areas.
+
+====================================================
+SECTION 1: ROOF / CEILING AREA
+====================================================
+Observation 1.1 - Active Water Ingress (Main Hall Ceiling)
+  Location   : Central ceiling above main hall, approx. 4m x 2m patch
+  Description: Visible brown staining and damp patches on the false ceiling tiles.
+               Two tiles have partially collapsed. Water drip marks on floor below
+               after recent rainfall.
+  Severity   : HIGH
+  Photo Ref  : IMG_001.jpg, IMG_002.jpg
+
+Observation 1.2 - Peeling Paint and Efflorescence (East Corridor Ceiling)
+  Location   : East corridor, 12m run
+  Description: Paint delamination and white mineral deposits (efflorescence) along
+               the entire east corridor ceiling. Indicates persistent moisture
+               migration through the roof slab.
+  Severity   : MEDIUM
+  Photo Ref  : IMG_003.jpg
+
+====================================================
+SECTION 2: EXTERNAL WALLS
+====================================================
+Observation 2.1 - Hairline and Structural Cracks (North Facade)
+  Location   : North external wall, ground to window level
+  Description: Diagonal hairline cracks running from window corners downward.
+               One crack measures approximately 3mm in width - may indicate
+               differential settlement. Render hollow in two locations.
+  Severity   : HIGH
+  Photo Ref  : IMG_004.jpg, IMG_005.jpg
+
+Observation 2.2 - Spalling Concrete (South-West Corner Parapet)
+  Location   : South-west corner parapet wall
+  Description: Concrete spalling with exposed and corroding reinforcement bars visible.
+               Carbonation of concrete suspected. Approx. 0.4 sq m affected.
+  Severity   : HIGH
+  Photo Ref  : IMG_006.jpg
+
+====================================================
+SECTION 3: INTERNAL WALLS
+====================================================
+Observation 3.1 - Rising Damp (Server Room, East Wall)
+  Location   : Server room, lower 600mm of east-facing internal wall
+  Description: Dark damp tide mark rising to approximately 600mm from floor level.
+               Paint blistering and plaster delamination. Damp meter reading 78%
+               (threshold: 20%). No effective damp proof course (DPC) present.
+  Severity   : CRITICAL
+  Photo Ref  : IMG_007.jpg, IMG_008.jpg
+
+Observation 3.2 - Mould Growth (Storage Room B)
+  Location   : Storage Room B, north-west corner
+  Description: Black mould (likely Cladosporium sp.) on internal wall corner.
+               Area approx. 0.6m x 0.8m. Likely cold bridging and condensation.
+               No mechanical ventilation in room.
+  Severity   : MEDIUM
+  Photo Ref  : IMG_009.jpg
+
+====================================================
+SECTION 4: FLOORING
+====================================================
+Observation 4.1 - Hollow and Cracked Tiles (Reception Area)
+  Location   : Reception area, approximately 15 sq m of tiled floor
+  Description: Hollow sound when tapped across ~40% of reception tiled floor,
+               indicating adhesion loss. Three tiles cracked through. No current
+               trip hazard but progressive failure likely.
+  Severity   : LOW
+  Photo Ref  : IMG_010.jpg
+
+====================================================
+SECTION 5: ELECTRICAL & MECHANICAL (VISUAL ONLY)
+====================================================
+Observation 5.1 - Exposed Wiring (IT Room)
+  Location   : IT room, above suspended ceiling void
+  Description: Several cable runs with damaged insulation, draped loosely without
+               containment. Significant fire risk.
+  Severity   : HIGH
+  Photo Ref  : IMG_011.jpg
+
+Observation 5.2 - HVAC Unit Leak (Server Room Ceiling)
+  Location   : Server room, ceiling-mounted HVAC unit
+  Description: Water staining observed below HVAC unit. Condensate drain appears
+               partially blocked. Contributing to damp issue on east wall.
+  Severity   : HIGH
+  Photo Ref  : IMG_012.jpg
+
+====================================================
+SECTION 6: ADDITIONAL INSPECTOR NOTES
+====================================================
+- Building is approximately 12 years old.
+- Last major refurbishment: unknown (records not provided by client).
+- Locked storage rooms C and D were NOT inspected - require future access.
+- Drainage inspection was outside scope of this report.
+====================================================
+END OF INSPECTION REPORT
+====================================================`;
+
+        const SAMPLE_THERM = `====================================================
+THERMAL IMAGING INSPECTION REPORT
+====================================================
+Report Reference : TR-2024-0892
+Survey Date      : 15 March 2024 (evening survey, 20:00-23:00 hrs)
+Property Address : Unit 4B, Greenfield Business Park, Sector 12, Chennai - 600 096
+Thermographer    : Priya Nair, Certified Thermographer (Level II, ITC)
+Instrument       : FLIR T840 Thermal Camera
+Ambient Temp     : 28 deg C (exterior), 24 deg C (interior)
+Delta-T          : 4 deg C
+====================================================
+
+FINDING T-01: MAIN HALL CEILING - ACTIVE MOISTURE
+  Thermal Image : THERM_001.jpg
+  Area          : Main hall ceiling, central zone
+  Findings      : Clear cold spot anomaly consistent with trapped moisture or
+                  saturated insulation. Surface temp 22.1 deg C vs surrounding
+                  26.4 deg C (delta 4.3 deg C). Pattern matches roof membrane
+                  failure above.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 1.1
+
+FINDING T-02: EAST CORRIDOR CEILING - MOISTURE MIGRATION
+  Thermal Image : THERM_002.jpg
+  Area          : East corridor ceiling, full length
+  Findings      : Linear cold pattern along ceiling-wall junction. Min temp
+                  21.8 deg C vs ambient 26.4 deg C. Moisture tracking along
+                  slab soffit from roof above.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 1.2
+
+FINDING T-03: NORTH FACADE - THERMAL BRIDGING AT CRACK LOCATIONS
+  Thermal Image : THERM_003.jpg
+  Area          : North external wall (viewed internally)
+  Findings      : Thermal bridges visible at crack locations. Temperature at
+                  crack zones 20.3 deg C vs wall face 25.1 deg C. No significant
+                  moisture in wall cavity at time of survey.
+  NOTE          : Structural assessment required - thermal imaging cannot confirm
+                  settlement.
+  Confidence    : Medium (moisture); structural interpretation not possible.
+  Cross-ref     : Partially corroborates Obs 2.1
+
+FINDING T-04: SERVER ROOM EAST WALL - SEVERE MOISTURE
+  Thermal Image : THERM_004.jpg, THERM_005.jpg
+  Area          : Server room, east wall (lower zone)
+  Findings      : Significant cold anomaly across lower 700mm of east wall.
+                  Min temp 19.2 deg C vs ambient 24.0 deg C (delta 4.8 deg C).
+                  Pattern consistent with rising damp. HVAC condensate drain
+                  failure likely contributing.
+  NOTE          : Visual inspection report states 600mm rising damp height;
+                  thermal imaging indicates up to 700mm in some zones.
+  Confidence    : Very High
+  Cross-ref     : Corroborates Obs 3.1 and Obs 5.2
+
+FINDING T-05: IT ROOM CEILING VOID - ELECTRICAL HOTSPOT
+  Thermal Image : THERM_006.jpg
+  Area          : IT room, above suspended ceiling (cable runs)
+  Findings      : Two localised hotspots detected.
+                  Hotspot A: 54.3 deg C (cable junction)
+                  Hotspot B: 48.7 deg C (separate run, 1.2m from hotspot A)
+                  Both temperatures significantly above 40 deg C threshold.
+  RISK LEVEL    : CRITICAL - immediate isolation and electrician inspection required.
+  Confidence    : Very High
+  Cross-ref     : Corroborates Obs 5.1
+
+FINDING T-06: STORAGE ROOM B - COLD BRIDGING
+  Thermal Image : THERM_007.jpg
+  Area          : Storage Room B, north-west corner
+  Findings      : Cold triangle pattern at internal corner indicating cold bridging.
+                  Min temp 19.7 deg C vs room 24.1 deg C. Surface below dew point,
+                  causing condensation and mould.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 3.2
+
+FINDING T-07: RECEPTION FLOOR - NO THERMAL ANOMALY
+  Thermal Image : THERM_008.jpg
+  Area          : Reception area floor
+  Findings      : No significant thermal anomaly detected beneath tiles. No moisture
+                  beneath tile bed. Hollow tiles (Obs 4.1) are adhesion failure only,
+                  not moisture-related.
+  Confidence    : High
+
+FINDING T-08: HVAC UNIT (SERVER ROOM) - CONDENSATE LEAK CONFIRMED
+  Thermal Image : THERM_009.jpg
+  Area          : Server room ceiling, HVAC unit
+  Findings      : Cold zone below HVAC body consistent with condensate accumulation.
+                  Condensate drain blockage confirmed. Contributing to east wall moisture.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 5.2
+
+AREAS NOT SURVEYED (THERMAL DATA NOT AVAILABLE):
+- South-west corner parapet exterior (access not possible)
+- Storage rooms C and D (access denied)
+- HVAC ductwork (outside scope)
+====================================================
+END OF THERMAL REPORT
+====================================================`;
+
+        function loadSamples() {
+            const ib = new Blob([SAMPLE_INSP], {
+                type: 'text/plain'
+            });
+            const tb = new Blob([SAMPLE_THERM], {
+                type: 'text/plain'
+            });
+            S.inspFile = new File([ib], 'inspection_report_sample.txt', {
+                type: 'text/plain'
+            });
+            S.thermFile = new File([tb], 'thermal_report_sample.txt', {
+                type: 'text/plain'
+            });
+            S.inspText = SAMPLE_INSP;
+            S.inspIsPDF = false;
+            S.thermText = SAMPLE_THERM;
+            S.thermIsPDF = false;
+            markCard('insp', 'inspection_report_sample.txt');
+            markCard('therm', 'thermal_report_sample.txt');
+            checkReady();
+            // Scroll down a little
+            document.querySelector('.upload-grid').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        // ══════════════════════════════
+        // FILE HANDLING
+        // ══════════════════════════════
+        function handleFile(type, input) {
+            const f = input.files[0];
+            if (!f) return;
+            if (type === 'insp') {
+                S.inspFile = f;
+                S.inspIsPDF = f.type === 'application/pdf';
+            } else {
+                S.thermFile = f;
+                S.thermIsPDF = f.type === 'application/pdf';
+            }
+            markCard(type, f.name);
+            checkReady();
+        }
+
+        function markCard(type, name) {
+            const id = type === 'insp' ? 'inspCard' : 'thermCard';
+            const ico = type === 'insp' ? 'inspIco' : 'thermIco';
+            const fn = type === 'insp' ? 'inspFname' : 'thermFname';
+            document.getElementById(id).classList.add('has-file');
+            document.getElementById(ico).textContent = '✅';
+            const el = document.getElementById(fn);
+            el.style.display = 'block';
+            el.textContent = name;
+            // Remove btn
+            const card = document.getElementById(id);
+            if (!card.querySelector('.u-remove')) {
+                const b = document.createElement('button');
+                b.className = 'u-remove';
+                b.textContent = '×';
+                b.onclick = e => {
+                    e.stopPropagation();
+                    clearFile(type);
+                };
+                card.appendChild(b);
+            }
+        }
+
+        function clearFile(type) {
+            if (type === 'insp') {
+                S.inspFile = null;
+                S.inspText = null;
+                S.inspB64 = null;
+                document.getElementById('inspFile').value = '';
+            } else {
+                S.thermFile = null;
+                S.thermText = null;
+                S.thermB64 = null;
+                document.getElementById('thermFile').value = '';
+            }
+            const id = type === 'insp' ? 'inspCard' : 'thermCard';
+            const ico = type === 'insp' ? 'inspIco' : 'thermIco';
+            const fn = type === 'insp' ? 'inspFname' : 'thermFname';
+            document.getElementById(id).classList.remove('has-file');
+            document.getElementById(ico).textContent = type === 'insp' ? '📋' : '🌡️';
+            document.getElementById(fn).style.display = 'none';
+            const rm = document.getElementById(id).querySelector('.u-remove');
+            if (rm) rm.remove();
+            checkReady();
+        }
+
+        function doDragOver(e, type) {
+            e.preventDefault();
+            document.getElementById(type === 'insp' ? 'inspCard' : 'thermCard').classList.add('drag-over');
+        }
+
+        function doDragLeave(type) {
+            document.getElementById(type === 'insp' ? 'inspCard' : 'thermCard').classList.remove('drag-over');
+        }
+
+        function doDrop(e, type) {
+            e.preventDefault();
+            doDragLeave(type);
+            const f = e.dataTransfer.files[0];
+            if (!f) return;
+            const dt = new DataTransfer();
+            dt.items.add(f);
+            const inp = document.getElementById(type === 'insp' ? 'inspFile' : 'thermFile');
+            inp.files = dt.files;
+            if (type === 'insp') {
+                S.inspFile = f;
+                S.inspIsPDF = f.type === 'application/pdf';
+            } else {
+                S.thermFile = f;
+                S.thermIsPDF = f.type === 'application/pdf';
+            }
+            markCard(type, f.name);
+            checkReady();
+        }
+
+        function checkReady() {
+            const btn = document.getElementById('genBtn');
+            const txt = document.getElementById('genTxt');
+            if (S.inspFile && S.thermFile) {
+                btn.disabled = false;
+                txt.textContent = '✨ Generate DDR Report with AI';
+            } else if (S.inspFile) {
+                btn.disabled = true;
+                txt.textContent = 'Upload Thermal Report to continue';
+            } else if (S.thermFile) {
+                btn.disabled = true;
+                txt.textContent = 'Upload Inspection Report to continue';
+            } else {
+                btn.disabled = true;
+                txt.textContent = 'Upload both documents to continue';
+            }
+        }
+
+        // ══════════════════════════════
+        // CONFIG
+        // ══════════════════════════════
+        function setCfg(key, val, el) {
+            S.cfg[key] = val;
+            // Deactivate siblings in same group
+            el.closest('.cfg-group').querySelectorAll('.cfg-chip').forEach(c => c.classList.remove('on'));
+            el.classList.add('on');
+        }
+
+        // ══════════════════════════════
+        // PROGRESS
+        // ══════════════════════════════
+        const PS = ['ps1', 'ps2', 'ps3', 'ps4', 'ps5', 'ps6'];
+        const PL = ['Reading and parsing source documents…', 'Extracting site observations and measurements…', 'Merging thermal imaging data with findings…', 'Analysing probable root causes and evidence…', 'Assessing severity levels and urgency…', 'Compiling and structuring the DDR report…'];
+        let pStep = 0,
+            pTimer = null;
+
+        function startProg() {
+            document.getElementById('progWrap').style.display = 'block';
+            pStep = 0;
+            PS.forEach(s => {
+                const el = document.getElementById(s);
+                el.className = 'ps';
+            });
+            document.getElementById('progFill').style.width = '0%';
+            document.getElementById('progPct').textContent = '0%';
+            tickProg(0);
+            pTimer = setInterval(() => {
+                if (pStep < PS.length - 1) {
+                    pStep++;
+                    tickProg(pStep);
+                }
+            }, 3800);
+        }
+
+        function tickProg(i) {
+            if (i > 0) {
+                document.getElementById(PS[i - 1]).className = 'ps done';
+            }
+            document.getElementById(PS[i]).className = 'ps active';
+            document.getElementById('progLabel').textContent = PL[i];
+            const pct = Math.round((i + 1) / PS.length * 80);
+            document.getElementById('progFill').style.width = pct + '%';
+            document.getElementById('progPct').textContent = pct + '%';
+        }
+
+        function endProg() {
+            clearInterval(pTimer);
+            PS.forEach(s => {
+                document.getElementById(s).className = 'ps done';
+            });
+            document.getElementById('progFill').style.width = '100%';
+            document.getElementById('progPct').textContent = '100%';
+            document.getElementById('progLabel').textContent = 'Report generated ✓';
+        }
+
+        // ══════════════════════════════
+        // JSON REPAIR (handles truncated responses)
+        // ══════════════════════════════
+        function repairJSON(str) {
+            // Already valid? return as-is
+            try {
+                JSON.parse(str);
+                return str;
+            } catch (e) {}
+
+            // Attempt to close any open structures
+            let s = str;
+
+            // Remove any trailing incomplete string (e.g. "text": "abc\nde)
+            // Find last complete quote-terminated value
+            s = s.replace(/,\s*$/, ''); // remove trailing comma
+
+            // Count open braces and brackets
+            let braces = 0,
+                brackets = 0,
+                inStr = false,
+                escape = false;
+            for (let i = 0; i < s.length; i++) {
+                const c = s[i];
+                if (escape) {
+                    escape = false;
+                    continue;
+                }
+                if (c === '\\' && inStr) {
+                    escape = true;
+                    continue;
+                }
+                if (c === '"' && !escape) {
+                    inStr = !inStr;
+                    continue;
+                }
+                if (!inStr) {
+                    if (c === '{') braces++;
+                    else if (c === '}') braces--;
+                    else if (c === '[') brackets++;
+                    else if (c === ']') brackets--;
+                }
+            }
+
+            // If we're inside a string, close it
+            if (inStr) s += '"';
+
+            // Remove any trailing partial key like ,"key":
+            s = s.replace(/,\s*"[^"]*"\s*:\s*$/, '');
+            s = s.replace(/,\s*"[^"]*"\s*$/, '');
+            s = s.replace(/,\s*$/, '');
+
+            // Close open arrays and objects
+            while (brackets > 0) {
+                s += ']';
+                brackets--;
+            }
+            while (braces > 0) {
+                s += '}';
+                braces--;
+            }
+
+            try {
+                JSON.parse(s);
+                return s;
+            } catch (e) {
+                // Last resort: try to extract just the valid prefix
+                for (let i = s.length - 1; i > 0; i--) {
+                    if (s[i] === '}' || s[i] === ']') {
+                        const candidate = s.slice(0, i + 1);
+                        try {
+                            JSON.parse(candidate);
+                            return candidate;
+                        } catch (_) {}
+                    }
+                }
+            }
+            return str; // give up, let the parse error show
+        }
+
+
+        const readB64 = f => new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = () => res(r.result.split(',')[1]);
+            r.onerror = rej;
+            r.readAsDataURL(f);
+        });
+        const readTxt = f => new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = () => res(r.result);
+            r.onerror = rej;
+            r.readAsText(f);
+        });
+
+        // ══════════════════════════════
+        // GENERATE
+        // ══════════════════════════════
+        async function doGenerate() {
+            const btn = document.getElementById('genBtn');
+            const err = document.getElementById('errBox');
+            err.style.display = 'none';
+            document.getElementById('reportWrap').style.display = 'none';
+            btn.disabled = true;
+            document.getElementById('genTxt').innerHTML = '<span class="spin">⟳</span> Generating report…';
+            startProg();
+
+            try {
+                // Build message content
+                const content = [];
+
+                // Inspection doc
+                if (S.inspText) {
+                    content.push({
+                        type: 'text',
+                        text: `=== DOCUMENT 1: INSPECTION REPORT (${S.inspFile.name}) ===\n${S.inspText}`
+                    });
+                } else if (S.inspIsPDF) {
+                    const b64 = await readB64(S.inspFile);
+                    content.push({
+                        type: 'document',
+                        source: {
+                            type: 'base64',
+                            media_type: 'application/pdf',
+                            data: b64
+                        }
+                    });
+                } else {
+                    const txt = await readTxt(S.inspFile);
+                    content.push({
+                        type: 'text',
+                        text: `=== DOCUMENT 1: INSPECTION REPORT (${S.inspFile.name}) ===\n${txt}`
+                    });
+                }
+
+                // Thermal doc
+                if (S.thermText) {
+                    content.push({
+                        type: 'text',
+                        text: `=== DOCUMENT 2: THERMAL REPORT (${S.thermFile.name}) ===\n${S.thermText}`
+                    });
+                } else if (S.thermIsPDF) {
+                    const b64 = await readB64(S.thermFile);
+                    content.push({
+                        type: 'document',
+                        source: {
+                            type: 'base64',
+                            media_type: 'application/pdf',
+                            data: b64
+                        }
+                    });
+                } else {
+                    const txt = await readTxt(S.thermFile);
+                    content.push({
+                        type: 'text',
+                        text: `=== DOCUMENT 2: THERMAL REPORT (${S.thermFile.name}) ===\n${txt}`
+                    });
+                }
+
+                const langNote = S.cfg.lang === 'client' ?
+                    'Use simple, plain English throughout. Explain technical terms in brackets where necessary. Write as if explaining to a non-technical property owner.' :
+                    'Use precise technical language appropriate for professional engineers, surveyors, and facility managers.';
+                const sevNote = S.cfg.sev === '4' ?
+                    'Use exactly these severity levels: Critical, High, Medium, Low.' :
+                    'Use exactly these severity levels: High, Medium, Low.';
+                const detailNote = S.cfg.detail === 'full' ?
+                    'Provide comprehensive, detailed content for each section.' :
+                    'Provide concise summaries in each section — prioritise key findings only.';
+
+                content.push({
+                    type: 'text',
+                    text: `
+You are a senior property diagnostic engineer. Analyse the two documents above and produce a complete Detailed Diagnostic Report (DDR).
+
+STRICT RULES:
+1. Do NOT invent any facts not in the documents.
+2. Missing info → write "Not Available" (string).
+3. Conflicts between docs → note the exact conflict and both values.
+4. Do NOT duplicate findings — merge related observations from both docs.
+5. ${langNote}
+6. ${sevNote}
+7. ${detailNote}
+8. Keep each text field concise (2-4 sentences max per field). Do NOT write essays.
+9. List all photo/image refs exactly as written in the docs.
+
+IMPORTANT: Return ONLY valid compact JSON. No markdown, no code fences, no explanation, no trailing commas. Be concise to avoid truncation.
+
+{
+  "property_info":{"property_address":"","inspection_date":"","thermal_survey_date":"","report_date":"","inspector_name":"","thermographer_name":"","client_name":"","report_reference_inspection":"","report_reference_thermal":"","building_age":"","floor_area":""},
+  "property_issue_summary":{"headline":"","overall_condition":"Good|Fair|Poor|Critical","total_issues_identified":0,"critical_count":0,"high_count":0,"medium_count":0,"low_count":0,"key_concerns":["","",""]},
+  "area_observations":[{"area_name":"","observation_ids":[""],"description":"","visual_findings":"","thermal_findings":"","temperature_readings":"","severity":"Critical|High|Medium|Low","images_referenced":[""],"thermal_confidence":"Very High|High|Medium|Low|Not Available"}],
+  "probable_root_causes":[{"issue":"","probable_cause":"","supporting_evidence":"","contributing_factors":[""]}],
+  "severity_assessment":[{"area":"","issue":"","severity":"Critical|High|Medium|Low","reasoning":"","urgency_timeline":"Immediate action|Within 30 days|Within 90 days|Scheduled maintenance","risk_if_ignored":""}],
+  "recommended_actions":[{"priority":1,"action":"","area":"","specialist_required":"","urgency":"Immediate|Short-term|Medium-term|Long-term","notes":""}],
+  "additional_notes":"",
+  "areas_not_inspected":[""],
+  "missing_unclear_info":[{"field":"","status":"Not Available|Conflicting","detail":""}],
+  "data_conflicts":[{"topic":"","inspection_report_value":"","thermal_report_value":"","recommendation":""}]
+}`
+                });
+
+                const resp = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-6',
+                        max_tokens: 8000,
+                        messages: [{
+                            role: 'user',
+                            content
+                        }]
+                    })
+                });
+
+                if (!resp.ok) {
+                    const e = await resp.json().catch(() => ({}));
+                    throw new Error(e.error ? .message || `API error ${resp.status}`);
+                }
+                const data = await resp.json();
+                let raw = (data.content ? .find(b => b.type === 'text') ? .text || '').trim();
+                raw = raw.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
+
+                // Repair truncated JSON: find the last complete top-level key and close the object
+                raw = repairJSON(raw);
+
+                const ddr = JSON.parse(raw);
+                S.lastDDR = ddr;
+                endProg();
+                renderReport(ddr);
+
+            } catch (e) {
+                clearInterval(pTimer);
+                document.getElementById('progWrap').style.display = 'none';
+                const errEl = document.getElementById('errBox');
+                errEl.style.display = 'block';
+                errEl.innerHTML = `<strong>⚠ Error:</strong> ${e.message||'An unexpected error occurred. Please try again.'}`;
+                document.getElementById('genBtn').disabled = false;
+                document.getElementById('genTxt').textContent = '✨ Generate DDR Report with AI';
+            }
+        }
+
+        // ══════════════════════════════
+        // RENDER
+        // ══════════════════════════════
+        function renderReport(d) {
+            const wrap = document.getElementById('reportWrap');
+            wrap.style.display = 'block';
+            wrap.classList.add('fade-in');
+
+            // Meta bar
+            const pi = d.property_info || {};
+            const psum = d.property_issue_summary || {};
+            document.getElementById('rptMeta').innerHTML = [
+                pi.property_address && `<div class="mc">📍 ${esc(pi.property_address)}</div>`,
+                pi.inspection_date && `<div class="mc">📅 Inspection: ${esc(pi.inspection_date)}</div>`,
+                pi.thermal_survey_date && `<div class="mc">🌡️ Thermal: ${esc(pi.thermal_survey_date)}</div>`,
+                pi.inspector_name && `<div class="mc">👤 ${esc(pi.inspector_name)}</div>`,
+                pi.report_reference_inspection && `<div class="mc">🔖 ${esc(pi.report_reference_inspection)}</div>`,
+                psum.overall_condition && `<div class="mc">🏠 Condition: <strong>${esc(psum.overall_condition)}</strong></div>`,
+            ].filter(Boolean).join('');
+
+            // Build sections
+            const sections = [{
+                n: '1',
+                ico: '📊',
+                title: 'Property Issue Summary',
+                badge: `${psum.total_issues_identified||0} issues`,
+                badgeStyle: 'background:var(--green-dim);color:var(--green);border-color:rgba(0,229,160,0.25)',
+                icoStyle: 'background:var(--green-dim)',
+                body: renderSummary(d)
+            }, {
+                n: '2',
+                ico: '🏗️',
+                title: 'Area-wise Observations',
+                badge: `${(d.area_observations||[]).length} areas`,
+                badgeStyle: 'background:var(--blue-dim);color:var(--blue);border-color:rgba(96,165,250,0.25)',
+                icoStyle: 'background:var(--blue-dim)',
+                body: renderAreas(d.area_observations)
+            }, {
+                n: '3',
+                ico: '🔍',
+                title: 'Probable Root Causes',
+                badge: `${(d.probable_root_causes||[]).length} identified`,
+                badgeStyle: 'background:var(--amber-dim);color:var(--amber);border-color:rgba(245,158,11,0.25)',
+                icoStyle: 'background:var(--amber-dim)',
+                body: renderCauses(d.probable_root_causes)
+            }, {
+                n: '4',
+                ico: '⚠️',
+                title: 'Severity Assessment',
+                badge: 'Risk matrix',
+                badgeStyle: 'background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.25)',
+                icoStyle: 'background:var(--red-dim)',
+                body: renderSeverity(d.severity_assessment, psum)
+            }, {
+                n: '5',
+                ico: '✅',
+                title: 'Recommended Actions',
+                badge: `${(d.recommended_actions||[]).length} actions`,
+                badgeStyle: 'background:var(--green-dim);color:var(--green);border-color:rgba(0,229,160,0.25)',
+                icoStyle: 'background:var(--green-dim)',
+                body: renderActions(d.recommended_actions)
+            }, {
+                n: '6',
+                ico: '📎',
+                title: 'Additional Notes',
+                badge: '',
+                badgeStyle: '',
+                icoStyle: 'background:var(--surface3)',
+                body: renderNotes(d)
+            }, {
+                n: '7',
+                ico: '❓',
+                title: 'Missing or Unclear Information',
+                badge: `${(d.missing_unclear_info||[]).length} gaps`,
+                badgeStyle: 'background:var(--surface3);color:var(--text3);border-color:var(--border)',
+                icoStyle: 'background:var(--surface3)',
+                body: renderMissing(d.missing_unclear_info, d.data_conflicts)
+            }, ];
+
+            const container = document.getElementById('rptContent');
+            container.innerHTML = '';
+            sections.forEach((sec, i) => {
+                        const div = document.createElement('div');
+                        div.className = 'ddr-card fade-in';
+                        div.style.animationDelay = `${i*0.07}s`;
+                        div.innerHTML = `
+      <div class="ddr-head" onclick="toggle('sec${sec.n}')">
+        <div class="ddr-ico" style="${sec.icoStyle}">${sec.ico}</div>
+        <div class="ddr-ht">${sec.n}. ${sec.title}</div>
+        ${sec.badge?`<div class="ddr-badge" style="${sec.badgeStyle}">${sec.badge}</div>`:''}
+        <div class="chv open" id="chv${sec.n}">▼</div>
+      </div>
+      <div class="ddr-body" id="sec${sec.n}">
+        <div class="dc" style="padding-top:1rem">${sec.body}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  wrap.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggle(id){
+  const body=document.getElementById(id);
+  const chv=document.getElementById('chv'+id.replace('sec',''));
+  if(body.style.display==='none'){body.style.display='block';chv.classList.add('open');}
+  else{body.style.display='none';chv.classList.remove('open');}
+}
+
+// ── Section renderers ──────────────────
+function renderSummary(d){
+  const sum=d.property_issue_summary||{};
+  const cond=sum.overall_condition||'Fair';
+  const condClass={'Good':'cond-Good','Fair':'cond-Fair','Poor':'cond-Poor','Critical':'cond-Critical'}[cond]||'cond-Fair';
+  let h=`<p>${esc(sum.headline||'Not Available')}</p>`;
+  h+=`<div class="sev-bar">
+    <div class="sev-card sc-crit"><span class="sc-num">${sum.critical_count||0}</span><span class="sc-lbl">Critical</span></div>
+    <div class="sev-card sc-high"><span class="sc-num">${sum.high_count||0}</span><span class="sc-lbl">High</span></div>
+    <div class="sev-card sc-med"><span class="sc-num">${sum.medium_count||0}</span><span class="sc-lbl">Medium</span></div>
+    <div class="sev-card sc-low"><span class="sc-num">${sum.low_count||0}</span><span class="sc-lbl">Low</span></div>
+  </div>`;
+  h+=`<div class="cond-badge ${condClass}">🏠 Overall Condition: ${esc(cond)}</div>`;
+  if(sum.key_concerns?.length){
+    h+=`<h3>Key concerns</h3><ul>${sum.key_concerns.map(c=>`<li>${esc(c)}</li>`).join('')}</ul>`;
+  }
+  const pi=d.property_info||{};
+  h+=`<h3>Property details</h3>`;
+  const fields=[
+    ['Address',pi.property_address],['Client',pi.client_name],['Inspector',pi.inspector_name],
+    ['Thermographer',pi.thermographer_name],['Inspection Date',pi.inspection_date],
+    ['Thermal Survey Date',pi.thermal_survey_date],['Building Age',pi.building_age],
+    ['Floor Area',pi.floor_area],['Report Ref (Inspection)',pi.report_reference_inspection],
+    ['Report Ref (Thermal)',pi.report_reference_thermal],
+  ];
+  h+=`<table><tbody>${fields.map(([k,v])=>`<tr><td style="color:var(--text3);white-space:nowrap;width:40%">${k}</td><td>${v?esc(v):`<span class="na">Not Available</span>`}</td></tr>`).join('')}</tbody></table>`;
+  return h;
+}
+
+function renderAreas(areas){
+  if(!areas?.length) return `<span class="na">Not Available</span>`;
+  return areas.map(a=>`
+    <div class="area-block">
+      <div class="area-name">${esc(a.area_name||'Unknown')} ${sevBadge(a.severity)}</div>
+      ${a.observation_ids?.length?`<p style="font-size:0.75rem;color:var(--text3)">References: ${a.observation_ids.map(esc).join(', ')}</p>`:''}
+      <p>${esc(a.description||'Not Available')}</p>
+      ${a.visual_findings&&a.visual_findings!=='Not Available'?`<p><strong>Visual:</strong> ${esc(a.visual_findings)}</p>`:''}
+      ${a.thermal_findings&&a.thermal_findings!=='Not Available'?`<p><strong>Thermal:</strong> ${esc(a.thermal_findings)}</p>`:`<p><strong>Thermal:</strong> <span class="na">Not Available</span></p>`}
+      ${a.temperature_readings&&a.temperature_readings!=='Not Available'?`<p><strong>Temp readings:</strong> ${esc(a.temperature_readings)}</p>`:''}
+      ${a.thermal_confidence&&a.thermal_confidence!=='Not Available'?`<p style="font-size:0.78rem;color:var(--text3)">Thermal confidence: ${esc(a.thermal_confidence)}</p>`:''}
+      ${renderImgRefs(a.images_referenced)}
+    </div>`).join('');
+}
+
+function renderImgRefs(imgs){
+  if(!imgs?.length) return '';
+  return `<div class="img-ref-grid">${imgs.map(img=>{
+    const na=!img||img.toLowerCase().includes('not available');
+    return `<div class="img-ref-chip${na?' img-na-chip':''}">📷 ${esc(img||'Image Not Available')}</div>`;
+  }).join('')}</div>`;
+}
+
+function renderCauses(causes){
+  if(!causes?.length) return `<span class="na">Not Available</span>`;
+  return causes.map(c=>`
+    <div class="cause-item">
+      <div class="cause-issue">${esc(c.issue||'Unknown')}</div>
+      <div class="cause-detail">${esc(c.probable_cause||'Not Available')}</div>
+      ${c.contributing_factors?.length?`<div class="cause-detail" style="margin-top:4px">Contributing factors: ${c.contributing_factors.map(esc).join('; ')}</div>`:''}
+      ${c.supporting_evidence?`<div class="cause-evidence">Evidence: ${esc(c.supporting_evidence)}</div>`:''}
+    </div>`).join('');
+}
+
+function renderSeverity(items,sumObj){
+  let h=`<div class="sev-bar">
+    <div class="sev-card sc-crit"><span class="sc-num">${sumObj?.critical_count||0}</span><span class="sc-lbl">Critical</span></div>
+    <div class="sev-card sc-high"><span class="sc-num">${sumObj?.high_count||0}</span><span class="sc-lbl">High</span></div>
+    <div class="sev-card sc-med"><span class="sc-num">${sumObj?.medium_count||0}</span><span class="sc-lbl">Medium</span></div>
+    <div class="sev-card sc-low"><span class="sc-num">${sumObj?.low_count||0}</span><span class="sc-lbl">Low</span></div>
+  </div>`;
+  if(!items?.length) return h+`<span class="na">No severity items listed.</span>`;
+  h+=`<table><thead><tr>
+    <th>Area</th><th>Issue</th><th>Severity</th><th>Urgency</th><th>Risk if Ignored</th>
+  </tr></thead><tbody>`;
+  items.forEach(item=>{
+    h+=`<tr>
+      <td>${esc(item.area||'—')}</td>
+      <td>${esc(item.issue||'—')}</td>
+      <td>${sevBadge(item.severity)}</td>
+      <td style="font-size:0.78rem;color:var(--text2)">${esc(item.urgency_timeline||'—')}</td>
+      <td style="font-size:0.78rem;color:var(--text2)">${esc(item.risk_if_ignored||'—')}</td>
+    </tr>`;
+    if(item.reasoning){
+      h+=`<tr><td colspan="5" style="font-size:0.78rem;color:var(--text3);padding-top:0;padding-bottom:8px;font-style:italic">Reasoning: ${esc(item.reasoning)}</td></tr>`;
+    }
+  });
+  h+=`</tbody></table>`;
+  return h;
+}
+
+function renderActions(actions){
+  if(!actions?.length) return `<span class="na">Not Available</span>`;
+  return actions.map((a,i)=>`
+    <div class="action-item">
+      <div class="action-num">${a.priority||i+1}</div>
+      <div class="action-body">
+        <strong>${esc(a.action||'Not Available')}</strong>
+        <div class="action-meta">${a.area?`Area: ${esc(a.area)}`:''}${a.area&&a.urgency?' · ':''}${a.urgency?esc(a.urgency):''}${a.specialist_required?' · Specialist: '+esc(a.specialist_required):''}</div>
+        ${a.notes&&a.notes!=='Not Available'?`<div class="action-note">${esc(a.notes)}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function renderNotes(d){
+  let h=`<p>${esc(d.additional_notes||'No additional notes.')}</p>`;
+  if(d.areas_not_inspected?.length){
+    h+=`<h3>Areas not inspected / outside scope</h3><ul>${d.areas_not_inspected.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`;
+  }
+  if(d.data_conflicts?.length){
+    h+=`<h3>Data conflicts between documents</h3>`;
+    h+=d.data_conflicts.map(c=>`
+      <div class="conflict-block">
+        <strong>${esc(c.topic||'Conflict')}</strong><br>
+        Inspection Report: ${esc(c.inspection_report_value||'—')}<br>
+        Thermal Report: ${esc(c.thermal_report_value||'—')}<br>
+        <span style="color:var(--amber)">→ Recommendation: ${esc(c.recommendation||'Verify on-site')}</span>
+      </div>`).join('');
+  }
+  return h;
+}
+
+function renderMissing(items,conflicts){
+  if(!items?.length&&!conflicts?.length) return `<p class="green-check">✓ All key information was present in the source documents.</p>`;
+  if(!items?.length) return `<p class="green-check">✓ No missing information identified.</p>`;
+  return `<table><thead><tr><th>Field</th><th>Status</th><th>Detail</th></tr></thead><tbody>
+    ${items.map((item,i)=>`<tr>
+      <td>${esc(item.field||'—')}</td>
+      <td><span class="${item.status==='Conflicting'?'conflict-flag':'na'}">${esc(item.status||'Not Available')}</span></td>
+      <td style="color:var(--text2)">${esc(item.detail||'—')}</td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+function sevBadge(sev){
+  const map={Critical:'sb-Critical',High:'sb-High',Medium:'sb-Medium',Low:'sb-Low'};
+  return `<span class="sb ${map[sev]||'sb-Low'}">${esc(sev||'Unknown')}</span>`;
+}
+
+function esc(s){
+  if(s==null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ══════════════════════════════
+// DOWNLOAD / COPY
+// ══════════════════════════════
+function downloadHTML(){
+  const body=document.getElementById('reportWrap').outerHTML;
+  const html=`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>DDR Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#fff;color:#111;padding:40px;max-width:960px;margin:0 auto;line-height:1.65}
+.rpt-btns,.btn-act{display:none}
+.ddr-card{border:1px solid #e0e0e0;border-radius:10px;margin-bottom:14px}
+.ddr-head{padding:12px 16px;background:#f5f5f5;display:flex;align-items:center;gap:10px}
+.ddr-body{padding:14px 16px}
+.ddr-ico{width:30px;height:30px;border-radius:8px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:14px}
+.ddr-ht{font-weight:600;flex:1}
+.ddr-badge{font-size:0.72rem;padding:3px 9px;border-radius:20px;background:#eee;font-weight:600}
+.chv{display:none}
+.sev-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.sev-card{padding:12px;border-radius:8px;text-align:center;border:1px solid #ddd}
+.sc-num{font-size:1.5rem;font-weight:700;display:block}
+.sc-lbl{font-size:0.7rem;text-transform:uppercase;font-weight:600}
+.sc-crit{background:#fff0f0;color:#c00}.sc-high{background:#fff5ee;color:#c05800}.sc-med{background:#fffbee;color:#a06000}.sc-low{background:#f0fff5;color:#007040}
+.sb{font-size:0.72rem;padding:2px 9px;border-radius:20px;font-weight:600}
+.sb-Critical{background:#fff0f0;color:#c00}.sb-High{background:#fff5ee;color:#c05800}.sb-Medium{background:#fffbee;color:#a06000}.sb-Low{background:#f0fff5;color:#007040}
+.dc{font-size:0.88rem;line-height:1.75}
+.dc h3{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#666;margin:14px 0 6px;border-bottom:1px solid #eee;padding-bottom:4px}
+.dc table{width:100%;border-collapse:collapse;font-size:0.83rem;margin-top:6px}
+.dc th{padding:8px;text-align:left;color:#666;border-bottom:2px solid #e0e0e0}
+.dc td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:top}
+.area-block{border:1px solid #e0e0e0;border-radius:8px;padding:12px;margin-bottom:10px}
+.area-name{font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.cause-item{border:1px solid #e0e0e0;border-radius:8px;padding:10px 12px;margin-bottom:8px}
+.action-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.action-num{min-width:26px;height:26px;border-radius:50%;background:#007040;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.conflict-block{background:#fffbee;border-left:3px solid #a06000;border-radius:0 6px 6px 0;padding:10px 12px;margin-bottom:8px;font-size:0.83rem}
+.na{background:#f0f0f0;color:#888;font-size:0.75rem;padding:2px 8px;border-radius:4px;font-style:italic}
+.img-ref-grid{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
+.img-ref-chip{font-size:0.72rem;padding:3px 9px;border-radius:6px;background:#f0f0f0;color:#555;border:1px solid #ddd}
+.rpt-title{font-size:1.5rem;font-weight:700;margin-bottom:8px}
+.rpt-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.mc{font-size:0.75rem;padding:3px 10px;border-radius:20px;background:#f0f0f0;color:#555;border:1px solid #e0e0e0}
+.cond-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;margin-top:6px}
+.cond-Good{background:#f0fff5;color:#007040;border:1px solid #b7e4c7}
+.cond-Fair{background:#fffbee;color:#a06000;border:1px solid #fde68a}
+.cond-Poor{background:#fff5ee;color:#c05800;border:1px solid #fed7aa}
+.cond-Critical{background:#fff0f0;color:#c00;border:1px solid #fca5a5}
+.action-body{flex:1}
+.action-body strong{font-weight:600;font-size:0.9rem}
+.action-meta{font-size:0.78rem;color:#666;margin-top:3px}
+.action-note{font-size:0.78rem;color:#999;margin-top:3px;font-style:italic}
+.cause-detail{font-size:0.83rem;color:#444}
+.cause-evidence{font-size:0.78rem;color:#888;margin-top:5px;border-top:1px solid #eee;padding-top:5px}
+.cause-issue{font-weight:600;font-size:0.88rem;margin-bottom:5px}
+.conflict-flag{background:#fffbee;color:#a06000;font-size:0.75rem;padding:2px 8px;border-radius:4px;border:1px solid #fde68a}
+.green-check{color:#007040;font-size:0.9rem}
+.img-na-chip{opacity:0.5;font-style:italic}
+.rpt-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.rpt-title{font-size:1.5rem;font-weight:700}
+.rpt-title span{color:#007040}
+</style></head><body>${body}</body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='DDR_Report_'+new Date().toISOString().slice(0,10)+'.html';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function copyJSON(){
+  if(!S.lastDDR){alert('No report generated yet.');return;}
+  const jsonBtn=document.getElementById('jsonBtn');
+  navigator.clipboard.writeText(JSON.stringify(S.lastDDR,null,2))
+    .then(()=>{
+      jsonBtn.textContent='✓ Copied!';
+      setTimeout(()=>jsonBtn.textContent='{ } JSON',1500);
+    }).catch(()=>{
+      window._DDR=S.lastDDR;
+      alert('Copy failed. Raw JSON stored in window._DDR — open DevTools console to access it.');
+    });
+}
+    </script>
+</body>
+
+</html>

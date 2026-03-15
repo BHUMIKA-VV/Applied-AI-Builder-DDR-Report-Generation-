@@ -1,0 +1,340 @@
+{
+  "property_info": {
+    "property_address": "Unit 4B, Greenfield Business Park, Sector 12, Chennai – 600 096",
+    "inspection_date": "14 March 2024",
+    "thermal_survey_date": "15 March 2024",
+    "report_date": "19 March 2024",
+    "inspector_name": "Arjun Venkataraman, CEng, MRICS",
+    "thermographer_name": "Priya Nair, Certified Thermographer (Level II, ITC)",
+    "client_name": "Mr. Ramesh Sundarajan",
+    "report_reference_inspection": "IR-2024-0892",
+    "report_reference_thermal": "TR-2024-0892",
+    "building_age": "Approximately 12 years",
+    "floor_area": "Approximately 3,200 sq ft (single floor)"
+  },
+  "property_issue_summary": {
+    "headline": "The property has significant structural and moisture defects requiring immediate remedial action, with a critical electrical fire risk in the IT room that demands urgent isolation.",
+    "overall_condition": "Poor",
+    "total_issues_identified": 8,
+    "critical_count": 2,
+    "high_count": 4,
+    "medium_count": 2,
+    "low_count": 1,
+    "key_concerns": [
+      "Critical electrical fire hazard — cable hotspots at 54.3°C and 48.7°C in IT room ceiling void",
+      "Severe rising damp in server room threatening IT equipment",
+      "Active roof water ingress causing ongoing ceiling damage in main hall"
+    ]
+  },
+  "area_observations": [
+    {
+      "area_name": "Main Hall — Ceiling",
+      "observation_ids": ["Obs 1.1", "T-01"],
+      "description": "Active water ingress through the central ceiling with brown staining and partial tile collapse. Thermal imaging confirms trapped moisture and saturated insulation above the false ceiling consistent with roof membrane failure.",
+      "visual_findings": "Brown staining and damp patches on false ceiling tiles (approx. 4m x 2m). Two tiles partially collapsed. Water drip marks visible on floor after rainfall.",
+      "thermal_findings": "Clear cold spot anomaly in central ceiling zone. Temperature differential: 22.1°C surface vs 26.4°C surroundings (delta 4.3°C). Pattern consistent with active leak from roof above.",
+      "temperature_readings": "Surface: 22.1°C vs ambient 26.4°C; delta T: 4.3°C",
+      "severity": "High",
+      "images_referenced": ["IMG_001.jpg", "IMG_002.jpg", "THERM_001.jpg"],
+      "thermal_confidence": "High"
+    },
+    {
+      "area_name": "East Corridor — Ceiling",
+      "observation_ids": ["Obs 1.2", "T-02"],
+      "description": "Persistent moisture migration along the entire east corridor ceiling causing paint peeling, efflorescence (white mineral deposits), and a linear cold pattern along the ceiling-wall junction confirmed by thermal imaging.",
+      "visual_findings": "Paint delamination and white mineral deposits (efflorescence) along the full 12m east corridor ceiling.",
+      "thermal_findings": "Linear cold pattern along the ceiling-wall junction. Moisture tracking along slab soffit from roof above.",
+      "temperature_readings": "Min temp recorded: 21.8°C vs ambient 26.4°C",
+      "severity": "Medium",
+      "images_referenced": ["IMG_003.jpg", "THERM_002.jpg"],
+      "thermal_confidence": "High"
+    },
+    {
+      "area_name": "North External Wall",
+      "observation_ids": ["Obs 2.1", "T-03"],
+      "description": "Diagonal cracks running from window corners downward, with one crack at 3mm width suggesting possible differential settlement. Thermal imaging confirms thermal bridging at crack locations but found no significant moisture in the wall cavity at time of survey. A structural engineer's assessment is required.",
+      "visual_findings": "Series of diagonal hairline cracks, one measuring 3mm. Hollow render in two locations confirmed by tapping test.",
+      "thermal_findings": "Thermal bridges visible at crack locations. No significant moisture trapped in wall cavity detected at time of survey.",
+      "temperature_readings": "Crack zones: 20.3°C vs wall face: 25.1°C",
+      "severity": "High",
+      "images_referenced": ["IMG_004.jpg", "IMG_005.jpg", "THERM_003.jpg"],
+      "thermal_confidence": "Medium"
+    },
+    {
+      "area_name": "South-West Corner Parapet",
+      "observation_ids": ["Obs 2.2"],
+      "description": "Concrete is breaking away (spalling) with reinforcement bars exposed and corroding, indicating the concrete has undergone carbonation. Approx. 0.4 sq m is affected. No thermal data available for this area.",
+      "visual_findings": "Concrete spalling with exposed, corroding reinforcement bars. Approximately 0.4 sq m affected. Carbonation suspected.",
+      "thermal_findings": "Not Available — exterior angle access was not possible for thermal survey.",
+      "temperature_readings": "Not Available",
+      "severity": "High",
+      "images_referenced": ["IMG_006.jpg"],
+      "thermal_confidence": "Not Available"
+    },
+    {
+      "area_name": "Server Room — East Wall",
+      "observation_ids": ["Obs 3.1", "T-04"],
+      "description": "Severe rising damp in the server room with a damp meter reading of 78% (safe threshold: 20%). Thermal imaging confirms moisture across the lower wall zone, with a slight discrepancy in height (see data conflicts below). HVAC condensate drain blockage is a confirmed contributing cause.",
+      "visual_findings": "Damp tide mark to approximately 600mm height. Paint blistering and plaster delamination. No effective damp proof course present.",
+      "thermal_findings": "Significant cold anomaly across the lower wall zone consistent with rising damp. HVAC condensate drain failure confirmed as contributing source.",
+      "temperature_readings": "Min: 19.2°C vs ambient 24.0°C; delta T: 4.8°C",
+      "severity": "Critical",
+      "images_referenced": ["IMG_007.jpg", "IMG_008.jpg", "THERM_004.jpg", "THERM_005.jpg"],
+      "thermal_confidence": "Very High"
+    },
+    {
+      "area_name": "Storage Room B — Internal Wall",
+      "observation_ids": ["Obs 3.2", "T-06"],
+      "description": "Black mould growth (likely Cladosporium sp.) in the north-west corner caused by cold bridging through the external wall and subsequent condensation. The room has no mechanical ventilation. Thermal imaging confirms classic cold-bridging pattern at this corner.",
+      "visual_findings": "Black mould covering approx. 0.6m x 0.8m area in corner. No mechanical ventilation in room.",
+      "thermal_findings": "Classic cold triangle pattern at internal corner. Surface temperature below dew point, causing condensation and mould.",
+      "temperature_readings": "Min: 19.7°C vs room ambient: 24.1°C",
+      "severity": "Medium",
+      "images_referenced": ["IMG_009.jpg", "THERM_007.jpg"],
+      "thermal_confidence": "High"
+    },
+    {
+      "area_name": "IT Room — Ceiling Void (Cable Runs)",
+      "observation_ids": ["Obs 5.1", "T-05"],
+      "description": "CRITICAL FIRE RISK. Damaged and uncontained cable runs in the ceiling void with two thermal hotspots detected at temperatures far exceeding safe thresholds. Immediate isolation by a qualified electrician is required.",
+      "visual_findings": "Cable runs with damaged insulation draped loosely without containment across ceiling void.",
+      "thermal_findings": "Two localised electrical hotspots detected. Hotspot A: 54.3°C at cable junction; Hotspot B: 48.7°C on separate run 1.2m away. Both significantly above the 40°C safety threshold.",
+      "temperature_readings": "Hotspot A: 54.3°C; Hotspot B: 48.7°C; Safe threshold: 40°C above ambient",
+      "severity": "Critical",
+      "images_referenced": ["IMG_011.jpg", "THERM_006.jpg"],
+      "thermal_confidence": "Very High"
+    },
+    {
+      "area_name": "Server Room — HVAC Unit",
+      "observation_ids": ["Obs 5.2", "T-08"],
+      "description": "The ceiling-mounted HVAC unit has a blocked condensate drain confirmed both visually (water staining below unit) and by thermal imaging. This is a direct contributing cause to the rising damp on the east wall.",
+      "visual_findings": "Water staining below ceiling-mounted HVAC unit. Condensate drain appears partially blocked.",
+      "thermal_findings": "Cold zone below HVAC body consistent with condensate water accumulation and drip path. Condensate drain blockage thermally confirmed.",
+      "temperature_readings": "Cold accumulation zone noted below unit — specific temps not recorded",
+      "severity": "High",
+      "images_referenced": ["IMG_012.jpg", "THERM_009.jpg"],
+      "thermal_confidence": "High"
+    },
+    {
+      "area_name": "Reception Area — Floor Tiles",
+      "observation_ids": ["Obs 4.1", "T-07"],
+      "description": "Approximately 40% of reception floor tiles have lost adhesion (hollow sound when tapped) and three tiles are cracked. Thermal imaging confirmed no moisture beneath the tile bed — this is a purely mechanical adhesion failure, not water-related.",
+      "visual_findings": "Hollow sound on ~40% of 15 sq m tiled area. Three tiles cracked through. No trip hazard currently.",
+      "thermal_findings": "No significant thermal anomaly or moisture detected beneath tiles. Confirms adhesion failure only.",
+      "temperature_readings": "No anomaly detected",
+      "severity": "Low",
+      "images_referenced": ["IMG_010.jpg", "THERM_008.jpg"],
+      "thermal_confidence": "High"
+    }
+  ],
+  "probable_root_causes": [
+    {
+      "issue": "Active water ingress — main hall and east corridor",
+      "probable_cause": "Failure of the roof membrane above the main hall and east corridor, allowing rainwater to penetrate the roof slab and migrate to the ceiling below.",
+      "supporting_evidence": "Visual staining and collapsed tiles (Obs 1.1); efflorescence on east corridor (Obs 1.2); thermal cold spots in both areas (T-01, T-02) consistent with saturated insulation.",
+      "contributing_factors": ["Likely aged or deteriorated roof membrane", "Possible blocked or failed roof drainage"]
+    },
+    {
+      "issue": "Rising damp and moisture in server room",
+      "probable_cause": "Combined effect of absent or failed damp proof course (DPC) allowing ground moisture to rise through the wall, compounded by a blocked HVAC condensate drain leaking water onto and into the wall.",
+      "supporting_evidence": "78% damp meter reading (Obs 3.1); HVAC water staining (Obs 5.2); thermal confirmation of both moisture in wall and condensate leak (T-04, T-08).",
+      "contributing_factors": ["No effective DPC in server room east wall", "Blocked HVAC condensate drain line"]
+    },
+    {
+      "issue": "Electrical overheating — IT room cable runs",
+      "probable_cause": "Damaged cable insulation combined with uncontained, loosely run cables are causing resistance-based heat generation at cable junctions and along runs, creating a fire hazard.",
+      "supporting_evidence": "Visually damaged and uncontained cabling (Obs 5.1); thermal hotspots at 54.3°C and 48.7°C (T-05).",
+      "contributing_factors": ["Aged or damaged cable insulation", "Inadequate cable management (no containment)", "Possible overloaded circuits"]
+    },
+    {
+      "issue": "Mould growth — Storage Room B",
+      "probable_cause": "Cold bridging through the external wall at the north-west corner reduces the internal wall surface temperature below the dew point, causing condensation to form and providing conditions for mould growth. No ventilation prevents moisture dispersal.",
+      "supporting_evidence": "Visual mould observation (Obs 3.2); thermal cold bridging pattern confirmed (T-06).",
+      "contributing_factors": ["Inadequate or absent wall insulation at corner junction", "No mechanical ventilation in room"]
+    },
+    {
+      "issue": "Structural cracking — North façade",
+      "probable_cause": "Diagonal crack pattern from window corners is consistent with differential settlement of the building foundation or thermal movement. The 3mm crack width warrants formal structural assessment.",
+      "supporting_evidence": "Visual 3mm diagonal crack and hollow render (Obs 2.1); thermal bridging at crack locations confirmed (T-03).",
+      "contributing_factors": ["Possible differential foundation settlement", "Thermal movement over building's 12-year life"]
+    }
+  ],
+  "severity_assessment": [
+    {
+      "area": "IT Room — Ceiling Void",
+      "issue": "Electrical hotspots (54.3°C and 48.7°C)",
+      "severity": "Critical",
+      "reasoning": "Temperatures far exceed safe thresholds. Damaged insulation and loose cabling create imminent fire risk in an occupied commercial building.",
+      "urgency_timeline": "Immediate action",
+      "risk_if_ignored": "Electrical fire, potential building destruction, injury to occupants"
+    },
+    {
+      "area": "Server Room — East Wall",
+      "issue": "Rising damp (78% moisture reading) + HVAC leak",
+      "severity": "Critical",
+      "reasoning": "Moisture at 78% significantly exceeds the 20% safe threshold. Server room location means IT equipment is at direct risk of moisture damage and failure.",
+      "urgency_timeline": "Immediate action",
+      "risk_if_ignored": "IT equipment failure, data loss, continued structural damage, potential electrical risk from wet environment"
+    },
+    {
+      "area": "North External Wall",
+      "issue": "Structural cracks, 3mm width, hollow render",
+      "severity": "High",
+      "reasoning": "3mm crack width and diagonal pattern from window corners suggest differential settlement. Requires structural engineer assessment to rule out progressive failure.",
+      "urgency_timeline": "Within 30 days",
+      "risk_if_ignored": "Progressive structural failure, increased water ingress through cracks, potential render collapse"
+    },
+    {
+      "area": "Main Hall — Ceiling",
+      "issue": "Active water ingress from roof",
+      "severity": "High",
+      "reasoning": "Active leak confirmed visually and thermally. Partially collapsed ceiling tiles and ongoing water ingress pose safety risk and progressive damage.",
+      "urgency_timeline": "Within 30 days",
+      "risk_if_ignored": "Full ceiling collapse, further internal damage, slip hazard from water on floor"
+    },
+    {
+      "area": "South-West Parapet",
+      "issue": "Spalling concrete with exposed reinforcement",
+      "severity": "High",
+      "reasoning": "Exposed corroding rebar indicates structural degradation of the parapet. Carbonated concrete will continue to allow corrosion to expand and cause further spalling.",
+      "urgency_timeline": "Within 30 days",
+      "risk_if_ignored": "Progressive concrete failure, potential collapse of parapet section, public safety risk"
+    },
+    {
+      "area": "Server Room — HVAC",
+      "issue": "Blocked condensate drain",
+      "severity": "High",
+      "reasoning": "Directly contributing to the critical moisture issue in the server room. Clearing the drain is an essential part of resolving the rising damp problem.",
+      "urgency_timeline": "Immediate action",
+      "risk_if_ignored": "Continued moisture loading of east wall, ongoing damage to server room"
+    },
+    {
+      "area": "East Corridor — Ceiling",
+      "issue": "Efflorescence and paint delamination",
+      "severity": "Medium",
+      "reasoning": "Symptom of ongoing moisture migration. Not immediately dangerous but indicates persistent roof or slab issue requiring investigation.",
+      "urgency_timeline": "Within 90 days",
+      "risk_if_ignored": "Continued moisture damage, potential ceiling degradation over time"
+    },
+    {
+      "area": "Storage Room B",
+      "issue": "Black mould growth",
+      "severity": "Medium",
+      "reasoning": "Health risk to occupants through mould spore exposure. Requires remediation and ventilation improvement to prevent recurrence.",
+      "urgency_timeline": "Within 90 days",
+      "risk_if_ignored": "Continued mould spread, respiratory health risk to occupants"
+    },
+    {
+      "area": "Reception Area",
+      "issue": "Hollow and cracked floor tiles",
+      "severity": "Low",
+      "reasoning": "Currently no trip hazard but progressive adhesion failure is likely. No moisture involvement confirmed by thermal survey.",
+      "urgency_timeline": "Scheduled maintenance",
+      "risk_if_ignored": "Further tile loss, eventual trip hazard, unsightly reception area"
+    }
+  ],
+  "recommended_actions": [
+    {
+      "priority": 1,
+      "action": "Immediately isolate the affected electrical circuits in the IT room ceiling void and engage a qualified electrician to inspect and replace damaged cabling. Do not delay — this is a fire hazard.",
+      "area": "IT Room — Ceiling Void",
+      "specialist_required": "Yes — Registered/qualified electrician (NICEIC or equivalent)",
+      "urgency": "Immediate",
+      "notes": "Until isolation is confirmed, assess whether the area can be safely used. The electrician should test all circuits in this zone and produce a written certificate of compliance."
+    },
+    {
+      "priority": 2,
+      "action": "Clear the HVAC condensate drain blockage in the server room and investigate the full drainage path. This is a contributing cause to the critical rising damp issue.",
+      "area": "Server Room — HVAC Unit",
+      "specialist_required": "Yes — HVAC/mechanical services engineer",
+      "urgency": "Immediate",
+      "notes": "Once cleared, install a condensate pump or improved drain routing to prevent recurrence. Document the repair."
+    },
+    {
+      "priority": 3,
+      "action": "Commission a damp specialist to assess the server room east wall, install an effective damp proof course (DPC) or injection treatment, and replaster the affected area after the HVAC drain has been fixed.",
+      "area": "Server Room — East Wall",
+      "specialist_required": "Yes — Damp proofing specialist and plasterer",
+      "urgency": "Immediate",
+      "notes": "IT equipment should be relocated away from the affected wall until moisture readings return below 20%. Allow full drying time before replastering (minimum 6–8 weeks after source is addressed)."
+    },
+    {
+      "priority": 4,
+      "action": "Commission a structural engineer to inspect the north façade cracks, determine whether differential settlement is occurring, and specify any required remedial works.",
+      "area": "North External Wall",
+      "specialist_required": "Yes — Chartered Structural Engineer",
+      "urgency": "Short-term",
+      "notes": "Install crack monitoring gauges in the interim to track whether movement is ongoing. Do not carry out cosmetic repairs until a structural assessment has been completed."
+    },
+    {
+      "priority": 5,
+      "action": "Engage a roofing contractor to fully inspect and repair the roof membrane above the main hall and east corridor to stop active water ingress.",
+      "area": "Main Hall and East Corridor Roof",
+      "specialist_required": "Yes — Specialist roofing contractor",
+      "urgency": "Short-term",
+      "notes": "Internal ceiling repairs (tiles, decoration) should only be carried out AFTER the roof has been successfully repaired and the area has dried out completely."
+    },
+    {
+      "priority": 6,
+      "action": "Carry out concrete repair works to the south-west parapet: remove loose and carbonated concrete, treat corrosion on exposed reinforcement bars, and apply protective coating. Consider full parapet inspection.",
+      "area": "South-West Parapet",
+      "specialist_required": "Yes — Concrete repair specialist",
+      "urgency": "Short-term",
+      "notes": "Access may require scaffolding or a cherry picker. Protect pedestrians below during works."
+    },
+    {
+      "priority": 7,
+      "action": "Professionally remediate the black mould in Storage Room B and install mechanical ventilation (minimum extract fan) to prevent recurrence.",
+      "area": "Storage Room B",
+      "specialist_required": "Yes — Mould remediation specialist, then general building contractor for ventilation",
+      "urgency": "Medium-term",
+      "notes": "Cold bridging insulation improvement at the corner should also be considered as a long-term solution."
+    },
+    {
+      "priority": 8,
+      "action": "Schedule replacement or re-adhering of hollow and cracked floor tiles in the reception area during the next planned maintenance cycle.",
+      "area": "Reception Area",
+      "specialist_required": "No — General contractor or tiler",
+      "urgency": "Long-term",
+      "notes": "No moisture issue was found beneath the tiles. Standard adhesive failure — straightforward repair."
+    }
+  ],
+  "additional_notes": "The building is approximately 12 years old. No records of previous refurbishments were available from the client. Two storage rooms (C and D) were locked and could not be inspected — these should be assessed at the earliest opportunity as their condition is unknown. Drainage inspection was outside the scope of this report and should be considered separately. The thermal survey was conducted at a Delta-T of only 4°C, which is marginal for a comprehensive envelope survey; a re-survey under conditions with a Delta-T exceeding 10°C would provide more conclusive data, particularly for the north façade assessment.",
+  "areas_not_inspected": [
+    "Storage Room C — locked, access not available",
+    "Storage Room D — locked, access not available",
+    "Drainage system — outside scope of this report",
+    "HVAC ductwork — outside scope of thermal survey",
+    "South-west parapet exterior — thermal survey access not possible at required angle"
+  ],
+  "missing_unclear_info": [
+    {
+      "field": "Building refurbishment history",
+      "status": "Not Available",
+      "detail": "Client was unable to provide records. Age and condition of roof membrane, DPC, and electrical installations are therefore unknown."
+    },
+    {
+      "field": "Thermal data for south-west parapet (exterior)",
+      "status": "Not Available",
+      "detail": "Thermographer was unable to survey this area from the required exterior angle."
+    },
+    {
+      "field": "Condition of Storage Rooms C and D",
+      "status": "Not Available",
+      "detail": "Rooms were locked during inspection and thermal survey. Both reports note these areas could not be assessed."
+    },
+    {
+      "field": "Rising damp height in server room east wall",
+      "status": "Conflicting",
+      "detail": "Inspection report records 600mm; thermal imaging indicates up to 700mm in some zones. See data conflicts."
+    }
+  ],
+  "data_conflicts": [
+    {
+      "topic": "Rising damp height — Server Room East Wall",
+      "inspection_report_value": "Damp tide mark rising to approximately 600mm from floor level (visual observation, Obs 3.1)",
+      "thermal_report_value": "Cold anomaly indicates moisture up to 700mm in some zones (thermal finding T-04)",
+      "recommendation": "The thermal reading (700mm) is likely more accurate as it detects sub-surface moisture not visible to the naked eye. Use 700mm as the working figure for remediation specifications."
+    }
+  ]
+}

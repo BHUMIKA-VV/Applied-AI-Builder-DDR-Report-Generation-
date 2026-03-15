@@ -1,0 +1,143 @@
+====================================================
+THERMAL IMAGING INSPECTION REPORT
+====================================================
+Report Reference : TR-2024-0892
+Survey Date      : 15 March 2024 (following day, evening survey 20:00–23:00 hrs)
+Property Address : Unit 4B, Greenfield Business Park, Sector 12, Chennai – 600 096
+Thermographer    : Priya Nair, Certified Thermographer (Level II, ITC)
+Instrument       : FLIR T840 Thermal Camera
+Ambient Temp     : 28°C (exterior), 24°C (interior)
+Delta-T          : 4°C (marginal but sufficient for envelope survey)
+Report Prepared  : 19 March 2024
+====================================================
+
+INTRODUCTION
+------------
+A thermal imaging survey was conducted to identify moisture, heat loss, and electrical
+anomalies not visible to the naked eye. All images are referenced in the findings below.
+Thermal images were captured under steady-state conditions after sunset to maximize
+Delta-T across the building envelope.
+
+====================================================
+FINDING T-01: MAIN HALL CEILING – ACTIVE MOISTURE
+====================================================
+  Thermal Image : THERM_001.jpg
+  Area          : Main hall ceiling, central zone
+  Findings      : Clear cold spot anomaly detected in the central ceiling zone,
+                  consistent with trapped moisture or saturated insulation.
+                  Temperature differential: Surface 22.1°C vs surrounding 26.4°C
+                  (delta 4.3°C). Pattern matches water migration from roof membrane
+                  failure above.
+  Confidence    : High – pattern consistent with active leak
+  Cross-ref     : Corroborates Obs 1.1 (visual staining and damp tiles)
+
+====================================================
+FINDING T-02: EAST CORRIDOR CEILING – MOISTURE MIGRATION
+====================================================
+  Thermal Image : THERM_002.jpg
+  Area          : East corridor ceiling, full length
+  Findings      : Linear cold pattern along the ceiling-wall junction of the east
+                  corridor. Min temp recorded: 21.8°C; ambient 26.4°C. This suggests
+                  moisture tracking along the slab soffit from the roof above.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 1.2 (efflorescence and paint peeling)
+
+====================================================
+FINDING T-03: NORTH FAÇADE – THERMAL BRIDGING AT CRACK LOCATIONS
+====================================================
+  Thermal Image : THERM_003.jpg
+  Area          : North external wall (viewed internally)
+  Findings      : Thermal bridges visible at two crack locations. Temperature at
+                  crack zones: 20.3°C vs wall face 25.1°C. Indicates compromised
+                  insulation continuity. No significant moisture trapped in wall
+                  cavity detected at this time.
+  NOTE          : Structural assessment required – thermal imaging alone cannot
+                  confirm settlement. Refer to structural engineer.
+  Confidence    : Medium (moisture aspect); structural interpretation not possible
+                  from thermal alone.
+  Cross-ref     : Partially corroborates Obs 2.1
+
+====================================================
+FINDING T-04: SERVER ROOM EAST WALL – SEVERE MOISTURE
+====================================================
+  Thermal Image : THERM_004.jpg, THERM_005.jpg
+  Area          : Server room, east wall (lower zone)
+  Findings      : Significant cold anomaly across entire lower 700mm of east wall.
+                  Min temp: 19.2°C vs ambient 24.0°C (delta 4.8°C). Pattern is
+                  consistent with rising damp or active moisture ingress from floor
+                  level. HVAC condensate drain failure likely contributing source.
+  NOTE          : Thermographer notes that visual inspection report states 600mm
+                  rising damp height; thermal imaging indicates up to 700mm in some
+                  zones — slight discrepancy.
+  Confidence    : Very High
+  Cross-ref     : Corroborates Obs 3.1 and Obs 5.2
+
+====================================================
+FINDING T-05: IT ROOM CEILING VOID – ELECTRICAL HOTSPOT
+====================================================
+  Thermal Image : THERM_006.jpg
+  Area          : IT room, above suspended ceiling (cable runs)
+  Findings      : Two localised hotspots detected in cable run area.
+                  Hotspot A: 54.3°C (cable junction/connection point)
+                  Hotspot B: 48.7°C (separate run, approx. 1.2m from hotspot A)
+                  Both temperatures significantly above acceptable threshold of 40°C
+                  above ambient for electrical components.
+  RISK LEVEL    : CRITICAL – immediate isolation and inspection by qualified
+                  electrician required. Fire risk present.
+  Confidence    : Very High
+  Cross-ref     : Corroborates Obs 5.1 (visual exposed/damaged wiring)
+
+====================================================
+FINDING T-06: STORAGE ROOM B – COLD BRIDGING
+====================================================
+  Thermal Image : THERM_007.jpg
+  Area          : Storage Room B, north-west corner (internal)
+  Findings      : Classic cold triangle pattern at internal corner, indicating cold
+                  bridging through external wall. Min temp 19.7°C vs room 24.1°C.
+                  This creates a surface below dew point, causing condensation and
+                  subsequent mould growth.
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 3.2 (black mould growth)
+
+====================================================
+FINDING T-07: RECEPTION FLOOR TILES – NO THERMAL ANOMALY
+====================================================
+  Thermal Image : THERM_008.jpg
+  Area          : Reception area floor
+  Findings      : No significant thermal anomaly detected beneath floor tiles. No
+                  moisture beneath tile bed identified via thermal. The hollow tiles
+                  (Obs 4.1) appear to be an adhesion failure only, not moisture-related.
+  Confidence    : High
+  Cross-ref     : Provides additional context for Obs 4.1
+
+====================================================
+FINDING T-08: HVAC UNIT (SERVER ROOM) – CONDENSATE LEAK CONFIRMED
+====================================================
+  Thermal Image : THERM_009.jpg
+  Area          : Server room ceiling, HVAC unit
+  Findings      : HVAC unit shows cold zone below unit body consistent with condensate
+                  water accumulation and drip path. Blockage in condensate drain line
+                  confirmed thermally. Contributing to moisture load on east wall (T-04).
+  Confidence    : High
+  Cross-ref     : Corroborates Obs 5.2
+
+====================================================
+AREAS WITH NO THERMAL ANOMALY FOUND
+====================================================
+- South-west corner parapet (exterior): Unable to survey from exterior at required
+  angle. Thermal data for Obs 2.2 (spalling concrete): NOT AVAILABLE.
+- Storage rooms C and D: Access denied. Thermal data: NOT AVAILABLE.
+- HVAC ductwork: Outside scope of survey.
+
+====================================================
+THERMOGRAPHER RECOMMENDATIONS
+====================================================
+1. Re-survey under higher Delta-T conditions (>10°C) for more conclusive envelope data.
+2. Electrical hotspots (T-05) require IMMEDIATE action — do not delay.
+3. Moisture intrusion in server room (T-04) must be addressed urgently to protect
+   IT equipment.
+4. Full structural engineer assessment recommended for north façade cracks.
+
+====================================================
+END OF THERMAL REPORT
+====================================================

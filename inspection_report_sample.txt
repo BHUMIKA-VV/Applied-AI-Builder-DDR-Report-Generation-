@@ -1,0 +1,116 @@
+====================================================
+PROPERTY INSPECTION REPORT
+====================================================
+Report Reference : IR-2024-0892
+Inspection Date  : 14 March 2024
+Property Address : Unit 4B, Greenfield Business Park, Sector 12, Chennai – 600 096
+Inspector Name   : Arjun Venkataraman, CEng, MRICS
+Client Name      : Mr. Ramesh Sundarajan
+Report Prepared  : 18 March 2024
+====================================================
+
+EXECUTIVE SUMMARY
+-----------------
+A full condition inspection was carried out on the above commercial premises spanning
+approximately 3,200 sq ft across a single floor. Several structural and water-related
+defects were identified during the inspection. Immediate remedial action is recommended
+for two areas; the remaining issues require attention within 90 days.
+
+====================================================
+SECTION 1: ROOF / CEILING AREA
+====================================================
+Observation 1.1 – Active Water Ingress (Main Hall Ceiling)
+  Location  : Central ceiling above main hall, approx. 4m x 2m patch
+  Description: Visible brown staining and damp patches observed on the false ceiling
+               tiles. Two tiles have partially collapsed. Water drip marks visible on
+               the floor directly below after recent rainfall.
+  Severity   : HIGH
+  Photo Ref  : IMG_001.jpg, IMG_002.jpg
+
+Observation 1.2 – Peeling Paint and Efflorescence (East Corridor Ceiling)
+  Location  : East corridor, 12m run
+  Description: Paint delamination and white mineral deposits (efflorescence) observed
+               along the entire length of the east corridor ceiling. Indicates persistent
+               moisture migration through the roof slab above.
+  Severity   : MEDIUM
+  Photo Ref  : IMG_003.jpg
+
+====================================================
+SECTION 2: EXTERNAL WALLS
+====================================================
+Observation 2.1 – Hairline and Structural Cracks (North Façade)
+  Location  : North external wall, ground to window level
+  Description: A series of diagonal hairline cracks observed running from the window
+               corners downward. One crack measures approximately 3mm in width and
+               may indicate differential settlement. Render is hollow in two locations
+               (confirmed by tapping test).
+  Severity   : HIGH
+  Photo Ref  : IMG_004.jpg, IMG_005.jpg
+
+Observation 2.2 – Spalling Concrete (South-West Corner Parapet)
+  Location  : South-west corner parapet wall
+  Description: Concrete spalling with exposed and corroding reinforcement bars visible.
+               Carbonation of concrete suspected. Approximately 0.4 sq m area affected.
+  Severity   : HIGH
+  Photo Ref  : IMG_006.jpg
+
+====================================================
+SECTION 3: INTERNAL WALLS
+====================================================
+Observation 3.1 – Rising Damp (Server Room, East Wall)
+  Location  : Server room, lower 600mm of east-facing internal wall
+  Description: Dark damp tide mark rising to approximately 600mm from floor level.
+               Paint blistering and plaster delamination observed. Damp meter reading
+               of 78% (threshold: 20%). No damp proof course (DPC) visible or effective.
+  Severity   : CRITICAL
+  Photo Ref  : IMG_007.jpg, IMG_008.jpg
+
+Observation 3.2 – Mould Growth (Storage Room B)
+  Location  : Storage Room B, north-west corner
+  Description: Black mould (likely Cladosporium sp.) identified on internal wall corner.
+               Area approximately 0.6m x 0.8m. Likely caused by cold bridging and
+               condensation. Room has no mechanical ventilation.
+  Severity   : MEDIUM
+  Photo Ref  : IMG_009.jpg
+
+====================================================
+SECTION 4: FLOORING
+====================================================
+Observation 4.1 – Hollow and Cracked Tiles (Reception Area)
+  Location  : Reception area, approximately 15 sq m of tiled floor
+  Description: Hollow sound when tapped across approx. 40% of tiled floor in the
+               reception area, indicating loss of adhesion. Three tiles are cracked
+               through. No lippage or trip hazard currently, but progressive failure
+               likely.
+  Severity   : LOW
+  Photo Ref  : IMG_010.jpg
+
+====================================================
+SECTION 5: ELECTRICAL & MECHANICAL (VISUAL ONLY)
+====================================================
+Observation 5.1 – Exposed Wiring (IT Room)
+  Location  : IT room, above suspended ceiling void
+  Description: Several cable runs were observed with damaged insulation and cables
+               draped loosely across the ceiling void without containment. Fire risk.
+  Severity   : HIGH
+  Photo Ref  : IMG_011.jpg
+
+Observation 5.2 – HVAC Unit Leak (Server Room Ceiling)
+  Location  : Server room, ceiling-mounted HVAC unit
+  Description: Water staining observed below HVAC unit. Condensate drain appears
+               partially blocked. Contributing to damp issue on east wall (Obs 3.1).
+  Severity   : HIGH
+  Photo Ref  : IMG_012.jpg
+
+====================================================
+SECTION 6: ADDITIONAL INSPECTOR NOTES
+====================================================
+- Building is approximately 12 years old.
+- Last major refurbishment: unknown (records not provided by client).
+- Some areas were inaccessible (locked storage rooms C and D) and have NOT been
+  inspected. These should be inspected at next available opportunity.
+- Drainage inspection was outside scope of this report.
+
+====================================================
+END OF INSPECTION REPORT
+====================================================
